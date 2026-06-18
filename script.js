@@ -1,62 +1,146 @@
 /* @author Trivik Kemisoft */
 
-// Live Trailhead profile handle derived from your custom profile link
-const trailheadProfileName = "trivik"; 
-
-async function fetchTrailheadStats() {
-    try {
-        // Fetching real-time profile metrics via community tracking scraper
-        const response = await fetch(`https://api.salesforce-trailhead.com/v1/profile/${trailheadProfileName}`);
-        if (!response.ok) throw new Error('Network response was not ok');
-        
-        const data = await response.json();
-        
-        // Dynamically overwrite fallback HTML metrics if properties are returned
-        if (data.rank) document.getElementById('th-rank').innerText = data.rank;
-        if (data.badges) document.getElementById('th-badges').innerText = data.badges;
-        if (data.superbadges) document.getElementById('th-superbadges').innerText = data.superbadges;
-    } catch (error) {
-        console.error('Error fetching Trailhead stats, falling back to hardcoded HTML defaults:', error);
-    }
-}
-
-// Global Lifecycle Listener
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Fire asynchronous profile data call
-    fetchTrailheadStats();
-    
-    // 2. Initialize Responsive Navigation Elements
+
+    /* -------------------------------------------------- */
+    /* MOBILE NAVIGATION                                   */
+    /* -------------------------------------------------- */
     const mobileMenu = document.getElementById('mobile-menu');
     const navLinks = document.querySelector('.nav-links');
 
+    function closeMobileNav() {
+        navLinks.classList.remove('active');
+        const icon = mobileMenu.querySelector('i');
+        if (icon) {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars');
+        }
+    }
+
     if (mobileMenu && navLinks) {
-        // Toggle Mobile Menu Open/Close UI view
         mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            
-            // Swap navigation FontAwesome structures conditionally
+            const isOpen = navLinks.classList.toggle('active');
             const icon = mobileMenu.querySelector('i');
             if (icon) {
-                if (navLinks.classList.contains('active')) {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-xmark');
-                } else {
-                    icon.classList.remove('fa-xmark');
-                    icon.classList.add('fa-bars');
-                }
+                icon.classList.toggle('fa-bars', !isOpen);
+                icon.classList.toggle('fa-xmark', isOpen);
             }
         });
 
-        // Close menu panel globally upon clicking an individual link anchor
         document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                const icon = mobileMenu.querySelector('i');
-                if (icon) {
-                    icon.classList.remove('fa-xmark');
-                    icon.classList.add('fa-bars');
-                }
-            });
+            link.addEventListener('click', closeMobileNav);
         });
     }
+
+    /* -------------------------------------------------- */
+    /* NAVBAR SCROLL SHADOW                                */
+    /* -------------------------------------------------- */
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.style.borderBottomColor = 'rgba(245, 158, 11, 0.15)';
+        } else {
+            navbar.style.borderBottomColor = '';
+        }
+    }, { passive: true });
+
+    /* -------------------------------------------------- */
+    /* ACTIVE NAV LINK ON SCROLL                           */
+    /* -------------------------------------------------- */
+    const sections = document.querySelectorAll('section[id], header[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '-40% 0px -55% 0px',
+        threshold: 0
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navAnchors.forEach(anchor => {
+                    anchor.classList.remove('nav-active');
+                    if (anchor.getAttribute('href') === '#' + entry.target.id) {
+                        anchor.classList.add('nav-active');
+                    }
+                });
+            }
+        });
+    }, observerOptions);
+
+    sections.forEach(section => sectionObserver.observe(section));
+
+    /* -------------------------------------------------- */
+    /* CONTACT FORM: mailto fallback                       */
+    /* Opens the user's email client pre-filled.           */
+    /* Replace with a real form backend (Formspree,        */
+    /* Netlify Forms, or EmailJS) when ready.              */
+    /* -------------------------------------------------- */
+    const submitBtn = document.getElementById('contact-submit');
+    const formStatus = document.getElementById('form-status');
+
+    if (submitBtn) {
+        submitBtn.addEventListener('click', () => {
+            const name    = document.getElementById('contact-name')?.value.trim();
+            const email   = document.getElementById('contact-email')?.value.trim();
+            const subject = document.getElementById('contact-subject')?.value;
+            const message = document.getElementById('contact-message')?.value.trim();
+
+            if (!name || !email || !message) {
+                formStatus.textContent = 'Please fill in your name, email, and message.';
+                formStatus.className = 'form-note error';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                formStatus.textContent = 'Please enter a valid email address.';
+                formStatus.className = 'form-note error';
+                return;
+            }
+
+            const subjectLine = subject
+                ? encodeURIComponent('Portfolio Inquiry: ' + subject)
+                : encodeURIComponent('Portfolio Inquiry');
+
+            const body = encodeURIComponent(
+                'Name: ' + name + '\n' +
+                'Email: ' + email + '\n\n' +
+                message
+            );
+
+            window.location.href = 'mailto:rao.trivikram@gmail.com?subject=' + subjectLine + '&body=' + body;
+
+            formStatus.textContent = 'Opening your email client...';
+            formStatus.className = 'form-note success';
+        });
+    }
+
+    /* -------------------------------------------------- */
+    /* SCROLL REVEAL: subtle fade-in for cards             */
+    /* -------------------------------------------------- */
+    const revealTargets = document.querySelectorAll(
+        '.card, .work-card, .cert-card, .stat-card, .th-metric-box'
+    );
+
+    if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealTargets.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(16px)';
+            el.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
+            revealObserver.observe(el);
+        });
+    }
+
 });
