@@ -72,52 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => sectionObserver.observe(section));
 
     /* -------------------------------------------------- */
-    /* CONTACT FORM: mailto fallback                       */
-    /* Opens the user's email client pre-filled.           */
-    /* Replace with a real form backend (Formspree,        */
-    /* Netlify Forms, or EmailJS) when ready.              */
-    /* -------------------------------------------------- */
-    const submitBtn = document.getElementById('contact-submit');
-    const formStatus = document.getElementById('form-status');
-
-    if (submitBtn) {
-        submitBtn.addEventListener('click', () => {
-            const name    = document.getElementById('contact-name')?.value.trim();
-            const email   = document.getElementById('contact-email')?.value.trim();
-            const subject = document.getElementById('contact-subject')?.value;
-            const message = document.getElementById('contact-message')?.value.trim();
-
-            if (!name || !email || !message) {
-                formStatus.textContent = 'Please fill in your name, email, and message.';
-                formStatus.className = 'form-note error';
-                return;
-            }
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                formStatus.textContent = 'Please enter a valid email address.';
-                formStatus.className = 'form-note error';
-                return;
-            }
-
-            const subjectLine = subject
-                ? encodeURIComponent('Portfolio Inquiry: ' + subject)
-                : encodeURIComponent('Portfolio Inquiry');
-
-            const body = encodeURIComponent(
-                'Name: ' + name + '\n' +
-                'Email: ' + email + '\n\n' +
-                message
-            );
-
-            window.location.href = 'mailto:rao.trivikram@gmail.com?subject=' + subjectLine + '&body=' + body;
-
-            formStatus.textContent = 'Opening your email client...';
-            formStatus.className = 'form-note success';
-        });
-    }
-
-    /* -------------------------------------------------- */
     /* SCROLL REVEAL: subtle fade-in for cards             */
     /* -------------------------------------------------- */
     const revealTargets = document.querySelectorAll(
