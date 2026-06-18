@@ -707,3 +707,37 @@ h2 {
     color: var(--text-muted);
     margin-top: 0.25rem;
 }
+/* @author Trivik Kemisoft */
+
+.cert-badge {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
+    z-index: 2;
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.3)) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.8));
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cert-card:hover .cert-badge {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.25)) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.9));
+}
+
+.cert-card {
+    background-color: #0f1622; 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem; 
+    text-align: left;
+    color: var(--text-main);
+    transition: all 0.2s ease;
+}
+
+.cert-card:hover {
+    background-color: #131b2a;
+    border-color: rgba(245, 158, 11, 0.3); 
+}
