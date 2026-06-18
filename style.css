@@ -599,3 +599,111 @@ h2 {
     .meta-info { flex-direction: column; gap: 16px; }
     .footer .container { flex-direction: column; gap: 16px; text-align: center; }
 }
+/* @author Trivik Kemisoft */
+
+/* CREDENTIALS LAYOUT OVERHAUL */
+.credentials-section {
+    max-width: 900px;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    text-align: center;
+}
+
+.section-tag {
+    color: var(--accent);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.section-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin-top: -0.5rem;
+    margin-bottom: 2.5rem;
+}
+
+/* Certifications Layout Grid */
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+}
+
+/* Cyber Accent Cards */
+.cert-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: left;
+    color: var(--text-main);
+    transition: all 0.25s ease;
+}
+
+.cert-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.05);
+}
+
+.cert-icon {
+    font-style: normal;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* Metric Display Card for Trailhead Rank */
+.metric-panel {
+    background: linear-gradient(180deg, var(--bg-card) 0%, rgba(15, 22, 34, 0.6) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 1.75rem;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.metric-title {
+    color: var(--accent-gold);
+    font-size: 1.4rem;
+    margin: 0 0 0.25rem 0;
+}
+
+.metric-subtitle {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 1.5rem;
+}
+
+.metric-stats {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1.25rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item strong {
+    font-size: 1.75rem;
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+.stat-item span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
