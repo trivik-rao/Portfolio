@@ -25,6 +25,7 @@ body {
   color: var(--ink);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  border-top: 3px solid var(--snow-green);
 }
 a { color:inherit; text-decoration:none; }
 img { display:block; max-width:100%; }
@@ -359,6 +360,26 @@ section:last-child { border-bottom: none; }
   color: var(--mut);
   font-size: 0.97rem;
   line-height: 1.7;
+}
+
+.stat-impact {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+
+.stat-impact::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--snow-green);
+  margin-right: 8px;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .tags {
