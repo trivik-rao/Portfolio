@@ -52,10 +52,11 @@ strong { font-weight:600; color:var(--ink); }
 }
 
 .side .photo {
-  width: 96px;
-  height: 96px;
+  width: 148px;
+  height: 168px;
   border-radius: 12px;
   object-fit: cover;
+  object-position: center top;
   border: 1px solid var(--line);
   margin-bottom: 20px;
   filter: contrast(1.04);
@@ -173,19 +174,13 @@ strong { font-weight:600; color:var(--ink); }
 }
 
 .eyebrow {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--acc);
-  margin-bottom: 28px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 16px;
-  border: 1px solid var(--acc-border);
-  border-radius: 100px;
-  background: var(--acc-dim);
+  margin-bottom: 26px;
+  display: block;
 }
 
 .hero-c h2 {
